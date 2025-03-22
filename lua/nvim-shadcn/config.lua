@@ -12,6 +12,11 @@ M.config = {
   },
 
   components = require('nvim-shadcn.components'),
+
+  keys = {
+    i = { doc = '<C-o>' },
+    n = { doc = '<C-o>' },
+  },
 }
 
 return M

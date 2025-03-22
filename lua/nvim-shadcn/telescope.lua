@@ -78,7 +78,36 @@ local function pick_component()
           end
         end
         actions.select_default:replace(run_action(add_component))
-        map({ 'i', 'n' }, '<C-o>', run_action(open_doc))
+
+        for key, value in pairs(config.keys.i) do
+          if key == 'doc' then
+            map({ 'i' }, value, run_action(open_doc))
+          else
+            map(
+              { 'i' },
+              value,
+              run_action(function(component)
+                add_component(component, key)
+              end)
+            )
+          end
+          -- map(key, value.doc, run_action(add_component))
+        end
+        for key, value in pairs(config.keys.n) do
+          if key == 'doc' then
+            map({ 'n' }, value, run_action(open_doc))
+          else
+            map(
+              { 'n' },
+              value,
+              run_action(function(component)
+                add_component(component, key)
+              end)
+            )
+          end
+          -- map(key, value.doc, run_action(add_component))
+        end
+        -- map({ 'i', 'n' }, '<C-o>', run_action(open_doc))
         return true
       end,
     })
