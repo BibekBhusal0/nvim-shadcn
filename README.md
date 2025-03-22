@@ -61,7 +61,7 @@ require('nvim-shadcn').setup({
 
 - **`default_installer`**: Set the package manager to use for installing components. Options include `npm`, `pnpm`, `yarn`, `bun` or you can even add your own.
 - **`format`**: Customize the command format for adding components and the documentation URL. You can modify the commands for each package manager as needed or even add new package manager.
-- **`components`**: Includes all components from shadcn website but if something is messing that can be added all components can be seen list [here](lua/nvim-shadcn/components).
+- **`components`**: Includes all components from shadcn website but if something is messing that can be added all components can be seen list [here](lua/nvim-shadcn/components.lua).
 - **`keys`**: Customize key mappings for opening documentation or installing with different package manager. The default is only for documentation set to `<C-o>`.
 - **`telescope_config`**: Adjust the Telescope settings.
 
@@ -75,7 +75,7 @@ require('nvim-shadcn').setup({
 
 `doc`: Opens the documentation for the selected component from telescope (default: `<C-o>`).
 
-if you want to install component with different package manager you can set custom keymap for it like
+if you want to install component with different package manager you can set custom keymap for it like:
 
 ```lua
 require('nvim-shadcn').setup({
@@ -100,3 +100,4 @@ This project is licensed under the [MIT License](LICENSE).
 ## Credits
 
 [browser.nvim](https://github.com/lalitmee/browse.nvim)
+[shadcn/ui](https://ui.shadcn.com/docs)
