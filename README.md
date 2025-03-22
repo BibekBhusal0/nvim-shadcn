@@ -1,33 +1,100 @@
-# nvim-plugin-template
+# nvim-shadcn
 
-Neovim plugin template; includes automatic documentation generation from README, integration tests with Busted, and linting with Stylua
+A Neovim plugin to add Shadcn UI components to your project with ease. This plugin integrates with Telescope to provide a user-friendly interface for selecting and installing shadcn components directly.
+
+## Prerequisites
+
+- Neovim 0.8+
+- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+
+## Installation
+
+Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+
+```lua
+{
+  'BibekBhusal/nvim-shadcn',
+  dependencies = {
+    'nvim-telescope/telescope.nvim'
+  },
+  config = function()
+    require('nvim-shadcn').setup({
+      -- Configuration options here
+    })
+  end
+}
+```
+
+## Configuration
+
+The following is the default configuration for the plugin. You can customize it by modifying the options in the setup function:
+
+```lua
+require('nvim-shadcn').setup({
+  default_installer = 'npm',
+
+  format = {
+    doc = 'https://ui.shadcn.com/docs/components/%s',
+    npm = 'npx shadcn@latest add %s',
+    pnpm = 'pnpm dlx shadcn@latest add %s',
+    yarn = 'npx shadcn@latest add %s',
+    bun = 'bunx --bun shadcn@latest add %s',
+  },
+
+  keys = { -- for telescope
+    i = { doc = '<C-o>' },
+    n = { doc = '<C-o>' },
+  },
+
+  telescope_config = {
+    sorting_strategy = 'ascending',
+    layout_config = {
+      prompt_position = 'top',
+      ...
+    },
+    prompt_title = 'Shadcn UI components',
+  },
+})
+```
+
+### Customization Options
+
+- **`default_installer`**: Set the package manager to use for installing components. Options include `npm`, `pnpm`, `yarn`, `bun` or you can even add your own.
+- **`format`**: Customize the command format for adding components and the documentation URL. You can modify the commands for each package manager as needed or even add new package manager.
+- **`components`**: Includes all components from shadcn website but if something is messing that can be added all components can be seen list [here](lua/nvim-shadcn/components).
+- **`keys`**: Customize key mappings for opening documentation or installing with different package manager. The default is only for documentation set to `<C-o>`.
+- **`telescope_config`**: Adjust the Telescope settings.
 
 ## Usage
 
-1. Click `use this template` button generate a repo on your github.
-2. Clone your plugin repo. Open terminal then cd plugin directory.
-3. Run `python3 rename.py your-plugin-name`. This will replace all `nvim-plugin-template` to your `plugin-name`. 
-   Then it will prompt you input `y` or `n` to remove example codes in `init.lua` and
-   `test/plugin_spec.lua`. If you are familiar this repo just input `y`. If you are looking at this template for the first time I suggest you inspect the contents. After this step `rename.py` will also auto-remove.
+`:ShadcnAdd` - Opens a Telescope picker to select a component to add.
+`:ShadcnAdd <component_name>` - Adds the specified component directly.
 
-Now you have a clean plugin environment. Enjoy!
+## Keymaps
 
-## Format
+`doc`: Opens the documentation for the selected component from telescope (default: `<C-o>`).
+if you want to install component with different package manager you can set custom keymap for it like
 
-The CI uses `stylua` to format the code; customize the formatting by editing `.stylua.toml`.
+```lua
+require('nvim-shadcn').setup({
+    keys = {
+        i = { yarn = '<C-y>' },
+        n = { yarn = '<C-y>' }
+    },
+    ...
+})
+```
 
-## Test
+Setting up custom keymaps for installing can be done this way:
 
-See [Running tests locally](https://github.com/nvim-neorocks/nvim-busted-action?tab=readme-ov-file#running-tests-locally)
+```lua
+vim.keymap.set('n', '<leader>sa', ':ShadcnAdd<CR>', { noremap = true, silent = true })
+```
 
-## CI
+## License
 
-- Auto generates doc from README.
-- Runs the [nvim-busted-action](https://github.com/nvim-neorocks/nvim-busted-action) for test.
-- Lints with `stylua`.
+This project is licensed under the [MIT License](LICENSE).
 
-## More
+## Credits
 
-To see this template in action, take a look at my other plugins.
-
-## License MIT
+[browser.nvim](https://github.com/lalitmee/browse.nvim)
