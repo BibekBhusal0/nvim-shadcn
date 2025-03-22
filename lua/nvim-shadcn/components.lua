@@ -1,6 +1,4 @@
-local M = {}
-
-M.components = {
+local M = {
   'accordion',
   'alert',
   'alert-dialog',
