@@ -68,11 +68,13 @@ require('nvim-shadcn').setup({
 ## Usage
 
 `:ShadcnAdd` - Opens a Telescope picker to select a component to add.
+
 `:ShadcnAdd <component_name>` - Adds the specified component directly.
 
 ## Keymaps
 
 `doc`: Opens the documentation for the selected component from telescope (default: `<C-o>`).
+
 if you want to install component with different package manager you can set custom keymap for it like
 
 ```lua
