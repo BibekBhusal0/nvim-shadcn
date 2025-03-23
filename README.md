@@ -38,7 +38,7 @@ require('nvim-shadcn').setup({
   default_installer = 'npm',
 
   format = {
-    doc = 'https://ui.shadcn.com/docs/components/%s',
+    doc = 'https://ui.shadcn.com/docs/components/%s', -- or https://mynaui.com/components/%s
     npm = 'npx shadcn@latest add %s',
     pnpm = 'pnpm dlx shadcn@latest add %s',
     yarn = 'npx shadcn@latest add %s',
@@ -65,8 +65,8 @@ require('nvim-shadcn').setup({
 
 - **`default_installer`**: Set the package manager to use for installing components. Options include `npm`, `pnpm`, `yarn`, `bun` or you can even add your own.
 - **`format`**: Customize the command format for adding components and the documentation URL. You can modify the commands for each package manager as needed or even add new package manager.
-- **`components`**: Includes all components from shadcn website but if something is messing that can be added all components can be seen list [here](lua/nvim-shadcn/components.lua).
-- **`keys`**: Customize key mappings for opening documentation or installing with different package manager. The default is only for documentation set to `<C-o>`.
+- **`components`**: Includes all components from [shadcn documentation](https://ui.shadcn.com/docs) but if something is missing that can be added, all components can be seen list [here](lua/nvim-shadcn/components.lua).
+- **`keys`**: Customize key mappings for opening documentation or installing with different package manager within telescope. The default is only for documentation set to `<C-o>`.
 - **`telescope_config`**: Adjust the Telescope settings.
 
 ## Usage
@@ -77,7 +77,28 @@ require('nvim-shadcn').setup({
 
 ## Keymaps
 
-`doc`: Opens the documentation for the selected component from telescope (default: `<C-o>`).
+Setting up custom keymaps for adding element can be done this way:
+
+```lua
+vim.keymap.set('n', '<leader>sa', ':ShadcnAdd<CR>', { noremap = true, silent = true })
+```
+
+Or do it lazy way
+
+```lua
+{
+    'BibekBhusal0/nvim-shadcn',
+    opts = {},
+    cmd = { 'ShadcnAdd' },
+    keys = {
+        { '<leader>sa', ':ShadcnAdd<CR>', desc = 'Add shadcn component' },
+    }
+}
+```
+
+### Telescope Keymaps
+
+`doc`: Opens the documentation for the selected component from (default: `<C-o>`).
 
 if you want to install component with different package manager you can set custom keymap for it like:
 
@@ -91,12 +112,6 @@ require('nvim-shadcn').setup({
 })
 ```
 
-Setting up custom keymaps for installing can be done this way:
-
-```lua
-vim.keymap.set('n', '<leader>sa', ':ShadcnAdd<CR>', { noremap = true, silent = true })
-```
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
@@ -104,4 +119,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## Credits
 
 [browser.nvim](https://github.com/lalitmee/browse.nvim)
+
+[telescope](https://github.com/nvim-telescope/telescope.nvim/)
+
 [shadcn/ui](https://ui.shadcn.com/docs)
