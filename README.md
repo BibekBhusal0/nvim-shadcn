@@ -2,6 +2,10 @@
 
 A Neovim plugin to add Shadcn UI components to your project with ease. This plugin integrates with Telescope to provide a user-friendly interface for selecting and installing shadcn components directly.
 
+## Demo
+
+![nvim-shadcn-demo](demo/nvim-shadcn.gif)
+
 ## Prerequisites
 
 - Neovim 0.8+
