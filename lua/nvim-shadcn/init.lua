@@ -4,11 +4,21 @@ local pick_component = require('nvim-shadcn.telescope').pick_component
 local add_component = require('nvim-shadcn.utils').add_component
 local init = require('nvim-shadcn.utils').init
 
-M = { pick_component = pick_component }
+M = { pick_component = pick_component, init = init }
 
 M.setup = function(opts)
   config = vim.tbl_deep_extend('force', config, opts)
   config_module.config = config
+
+  vim.api.nvim_create_user_command('ShadcnInit', function()
+    init()
+  end, {})
+
+  vim.api.nvim_create_user_command('ShadcnAddImportant', function()
+    for _, component in ipairs(config.important) do
+      add_component(component)
+    end
+  end, {})
 
   vim.api.nvim_create_user_command('ShadcnAdd', function(args)
     local user_args = args.args
@@ -48,12 +58,6 @@ M.setup = function(opts)
       pick_component()
     end
   end, { nargs = '*' })
-
-  vim.api.nvim_create_user_command('ShadcnInit', function(args)
-    init()
-  end, { nargs = '*' })
-
-  --
 end
 
 return M
