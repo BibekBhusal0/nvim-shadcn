@@ -18,6 +18,16 @@ M.config = {
     n = { doc = '<C-o>' },
   },
 
+  init_command = {
+    commands = {
+      npm = 'npx shadcn@latest init',
+      pnpm = 'pnpm dlx shadcn@latest init',
+      yarn = 'npx shadcn@latest init',
+      bun = 'bunx --bun shadcn@latest init',
+    },
+    flags = { defaults = true, force = false },
+  },
+
   telescope_config = {
     sorting_strategy = 'ascending',
     layout_config = {

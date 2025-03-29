@@ -68,4 +68,37 @@ local function add_component(component, installer)
   })
 end
 
-return { add_component = add_component, open_doc = open_doc }
+local function init(installer)
+  local config = require('nvim-shadcn.config').config
+
+  local flags = config.init_command.flags
+  installer = installer or config.default_installer
+  local command_format = config.init_command.commands[installer]
+  if not command_format then
+    return
+  end
+
+  local flag_string = ''
+  if flags then
+    for k, v in pairs(flags) do
+      if v == true then
+        flag_string = flag_string .. ' ' .. '--' .. k
+      elseif type(v) == 'string' then
+        flag_string = flag_string .. ' ' .. '--' .. k .. '=' .. v
+      end
+    end
+  end
+  local cmd = string.format('echo "yes" | %s %s', command_format, flag_string)
+
+  vim.fn.jobstart(cmd, {
+    on_exit = function(_, exit_code)
+      if exit_code == 0 then
+        vim.notify('Shadcn UI initialized successfully!', vim.log.levels.INFO)
+      else
+        vim.notify('Error initializing Shadcn UI', vim.log.levels.ERROR)
+      end
+    end,
+  })
+end
+
+return { add_component = add_component, open_doc = open_doc, init = init }
