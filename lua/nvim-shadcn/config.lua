@@ -26,6 +26,7 @@ M.config = {
       bun = 'bunx --bun shadcn@latest init',
     },
     flags = { defaults = true, force = false },
+    default_color = 'Gray',
   },
 
   telescope_config = {

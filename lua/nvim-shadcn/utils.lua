@@ -65,6 +65,12 @@ local function add_component(component, installer)
         vim.notify(string.format('Error adding component %s', component), vim.log.levels.ERROR)
       end
     end,
+    on_stdout = function(_, data)
+      print(table.concat(data, '\n'))
+    end,
+    on_stderr = function(_, data)
+      print(table.concat(data, '\n'))
+    end,
   })
 end
 
@@ -88,7 +94,7 @@ local function init(installer)
       end
     end
   end
-  local cmd = string.format('echo "yes" | %s %s', command_format, flag_string)
+  local cmd = string.format('%s %s', command_format, flag_string)
 
   vim.fn.jobstart(cmd, {
     on_exit = function(_, exit_code)
@@ -96,6 +102,50 @@ local function init(installer)
         vim.notify('Shadcn UI initialized successfully!', vim.log.levels.INFO)
       else
         vim.notify('Error initializing Shadcn UI', vim.log.levels.ERROR)
+      end
+    end,
+
+    stdout_buffered = false,
+    stderr_buffered = false,
+    pty = true,
+    stdin_close = false,
+
+    on_stdout = function(job_id, data)
+      local function strip_ansi_codes(str)
+        str = str:gsub('\27%[[%d;]*[mK]?', '')
+        str = str:gsub('lH%?25h', '')
+        str = str:gsub('%?25.', '')
+        str = str:gsub('JH%[%d*;?%]', '')
+        return str
+      end
+
+      local output = table.concat(data, '\n')
+
+      output = strip_ansi_codes(output)
+
+      local color_options = { 'Neutral', 'Gray', 'Zinc', 'Stone', 'Slate' }
+      local default_color = config.init_command.default_color or 'Gray'
+
+      if output:find('Which color would you like to use as the base color') then
+        local default_index = 1
+        for i, color in ipairs(color_options) do
+          if color == default_color then
+            default_index = i
+            break
+          end
+        end
+
+        for i = 1, default_index - 1 do
+          vim.fn.jobsend(job_id, '\27[B')
+        end
+        vim.fn.jobsend(job_id, '\13')
+      end
+    end,
+
+    on_stderr = function(_, data)
+      print('')
+      for _, line in ipairs(data) do
+        vim.notify(line, vim.log.levels.INFO)
       end
     end,
   })
