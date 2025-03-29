@@ -26,7 +26,7 @@ M.config = {
       yarn = 'npx shadcn@latest init',
       bun = 'bunx --bun shadcn@latest init',
     },
-    flags = { defaults = true, force = false },
+    flags = { defaults = false, force = false },
     default_color = 'Gray',
   },
 
