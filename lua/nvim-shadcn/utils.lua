@@ -57,9 +57,12 @@ local function add_component(component, installer)
   vim.fn.jobstart(cmd, {
     on_exit = function(_, exit_code)
       if exit_code == 0 then
-        vim.notify('Component added successfully!', vim.log.levels.INFO)
+        vim.notify(
+          string.format('Component %s added successfully!', component),
+          vim.log.levels.INFO
+        )
       else
-        vim.notify('Error adding component', vim.log.levels.ERROR)
+        vim.notify(string.format('Error adding component %s', component), vim.log.levels.ERROR)
       end
     end,
   })
