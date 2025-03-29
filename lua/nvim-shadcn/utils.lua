@@ -53,12 +53,16 @@ local function add_component(component, installer)
     return
   end
   local cmd = string.format('echo "yes" | %s', command_format:format(component))
-  local result = vim.fn.system(cmd)
-  if vim.v.shell_error == 0 then
-    print('Component added successfully!')
-  else
-    print('Error adding component: ' .. result)
-  end
+
+  vim.fn.jobstart(cmd, {
+    on_exit = function(_, exit_code)
+      if exit_code == 0 then
+        vim.notify('Component added successfully!', vim.log.levels.INFO)
+      else
+        vim.notify('Error adding component', vim.log.levels.ERROR)
+      end
+    end,
+  })
 end
 
 return { add_component = add_component, open_doc = open_doc }
