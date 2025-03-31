@@ -1,4 +1,4 @@
-*nvim-shadcn.txt*          For NVIM v0.8.0          Last change: 2025 March 29
+*nvim-shadcn.txt*          For NVIM v0.8.0          Last change: 2025 March 31
 
 ==============================================================================
 Table of Contents                              *nvim-shadcn-table-of-contents*
@@ -78,6 +78,7 @@ by modifying the options in the setup function:
         bun = 'bunx --bun shadcn@latest add %s',
       },
     
+      verbose = false,
       important = { 'button', 'card', 'checkbox', 'tooltip' }, -- this will be added when running `:ShadcnAddImportant`
     
       keys = { -- for telescope
@@ -117,6 +118,7 @@ CUSTOMIZATION OPTIONS ~
 - **keys**: Customize key mappings for opening documentation or installing with different package manager within telescope. The default is only for documentation set to `<C-o>`.
 - **init_command**: Customize the init command for any package manager. Change base color, package manager and flags.
 - **telescope_config**: Adjust the Telescope settings.
+- **verbose**: Weather or not to print everything in the process.
 
 
 USING DIFFERENT PACKAGE MANAGER EXAMPLE ~
