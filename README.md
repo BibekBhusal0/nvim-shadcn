@@ -54,6 +54,7 @@ require('nvim-shadcn').setup({
     bun = 'bunx --bun shadcn@latest add %s',
   },
 
+  verbose = false,
   important = { 'button', 'card', 'checkbox', 'tooltip' }, -- this will be added when running `:ShadcnAddImportant`
 
   keys = { -- for telescope
@@ -92,6 +93,7 @@ require('nvim-shadcn').setup({
 - **`keys`**: Customize key mappings for opening documentation or installing with different package manager within telescope. The default is only for documentation set to `<C-o>`.
 - **`init_command`**: Customize the init command for any package manager. Change base color, package manager and flags.
 - **`telescope_config`**: Adjust the Telescope settings.
+- **`verbose`**: Weather or not to print everything in the process.
 
 ### Using different Package manager Example
 

@@ -66,10 +66,14 @@ local function add_component(component, installer)
       end
     end,
     on_stdout = function(_, data)
-      print(table.concat(data, '\n'))
+      if config.verbose then
+        print(table.concat(data, '\n'))
+      end
     end,
     on_stderr = function(_, data)
-      print(table.concat(data, '\n'))
+      if config.verbose then
+        print(table.concat(data, '\n'))
+      end
     end,
   })
 end
@@ -135,7 +139,7 @@ local function init(installer)
           end
         end
 
-        for i = 1, default_index - 1 do
+        for _ = 1, default_index - 1 do
           vim.fn.jobsend(job_id, '\27[B')
         end
         vim.fn.jobsend(job_id, '\13')
@@ -143,9 +147,11 @@ local function init(installer)
     end,
 
     on_stderr = function(_, data)
-      print('')
-      for _, line in ipairs(data) do
-        vim.notify(line, vim.log.levels.INFO)
+      if config.verbose then
+        print('')
+        for _, line in ipairs(data) do
+          vim.notify(line, vim.log.levels.INFO)
+        end
       end
     end,
   })

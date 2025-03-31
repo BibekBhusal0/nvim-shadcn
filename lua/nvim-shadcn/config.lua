@@ -13,6 +13,7 @@ M.config = {
 
   components = require('nvim-shadcn.components'),
   important = { 'button', 'card', 'checkbox', 'tooltip' },
+  verbose = false,
 
   keys = {
     i = { doc = '<C-o>' },
