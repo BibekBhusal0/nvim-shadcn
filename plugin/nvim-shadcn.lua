@@ -51,4 +51,7 @@ vim.api.nvim_create_user_command('ShadcnAdd', function(args)
     -- No arguments provided
     pick_component()
   end
-end, { nargs = '*' })
+end, {
+  nargs = '*',
+  complete = "custom,v:lua.require'nvim-shadcn.completion'.complete_shadcn_add",
+})
